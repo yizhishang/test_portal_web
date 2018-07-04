@@ -1,0 +1,44 @@
+<!-- Logback configuration. See http://logback.qos.ch/manual/index.html -->
+<configuration scan="true" scanPeriod="10 seconds">
+
+    <property name="log_path" value="/logs"/>
+    <property name="fileName" value="${log_path}/web-${HOSTNAME}.log"/>
+
+    <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+        </filter>
+        <File>${fileName}</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${fileName}-%d{yyyyMMdd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36}.%M\(%line\) -%msg%n%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36}.%M\(%line\) - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- additivity true 信息向上级传递，logger本身打印一次 -->
+    <logger name="cn.vpclub.pinganquan.mobile" level="INFO" additivity="true">
+        <appender-ref ref="INFO_FILE"/>
+    </logger>
+
+    <!--将org包下面的所有日志级别设为了ERROR，不会再打扰我们的DEBUG-->
+    <logger name="org.thymeleaf" level="ERROR" />
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>
