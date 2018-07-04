@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+    <title>Spring MVC with thymeleaf</title>
+    <script th:src="@{${'/js/angular.min.js?v=2016061601'}}"></script>
+    <script th:src="@{${'/js/main.js?v=2016061601'}}"></script>
+</head>
+<body ng-app="index" ng-controller="indexCtrl">
+<p th:text="'Hello, ' + ${name} + ' with thymeleaf !'" /> <br/>
+run ok....
+<div class = "daojishi">
+    <h2>µ¹¼ÆÊ±</h2>
+    <div>{{currentTime}}</div>
+</div>
+</body>
+</html>
